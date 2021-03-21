@@ -2,16 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 #define TABLE_SIZE 17
 #define oprand_SIZE 3
 #define upcode_SIZE 2
 
 typedef struct {
-    char* oprand; //key
-    char* upcode;
+    char oprand[oprand_SIZE]; //key
+    char upcode[upcode_SIZE];
 } symboliclabels;
 
 symboliclabels SymTable[TABLE_SIZE]; 
+FILE* InFile = fopen("assemblycode.txt", "r");
+FILE* OutFIle = fopen("output.txt", "w");
 
 int hash(char *s){
     //a better one with less colisions
@@ -64,13 +67,13 @@ void display_table(void){
 void initialise_table(void){
     insert_table(gennerate_label("ASG", "+0"));
     insert_table(gennerate_label("ADD", "+1"));
-    insert_table(gennerate_label("SUB", "+0"));
-    insert_table(gennerate_label("MUL", "+0"));
-    insert_table(gennerate_label("DIV", "+0"));
-    insert_table(gennerate_label("SQR", "+0"));
-    insert_table(gennerate_label("SQT", "+0"));
-    insert_table(gennerate_label("EQL", "+0"));
-    insert_table(gennerate_label("NEQ", "+0"));
+    insert_table(gennerate_label("SUB", "-1"));
+    insert_table(gennerate_label("MUL", "+2"));
+    insert_table(gennerate_label("DIV", "-2"));
+    insert_table(gennerate_label("SQR", "+3"));
+    insert_table(gennerate_label("SQT", "-3"));
+    insert_table(gennerate_label("EQL", "+4"));
+    insert_table(gennerate_label("NEQ", "+5"));
     insert_table(gennerate_label("NEQ", "+0"));
     insert_table(gennerate_label("GTE", "+0"));
     insert_table(gennerate_label("LSS", "+0"));

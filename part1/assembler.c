@@ -1,4 +1,4 @@
-#include "symbolTable.h"
+#include "assembler.h"
 
 int main(void){
     initialise_table();
