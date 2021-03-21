@@ -3,7 +3,19 @@ In this first part of the project, you will design a machine language similar to
 In addition to designing the numeric ML, you will also design a symbolic version of it, like an assembly language (AL). You will use the symbolic version as an intermediate step in the translation from the higher-level to the lower-level numeric language. It will be useful for you to examine and debug the code generated in translating from the higher-level language to code that runs on the VM.
 
 # Instruction 
-| Operation| Description| Description |
+// this should be continued 
+| Operation| Description| upcode |
 | ----------- | ----------- | ----------- |
-| Header| Title       |
-| Paragraph   | Text       |
+| ASG   | Assignment        | +0
+| ADD   | Addition       | +1
+| SUB   | Subtraction        | -1
+| MUL   | Multiplication        | +2
+| DIV   | Division        | -2
+| SQR   | Squared       | +3
+|  SQT  |    Squareroot     | -3
+|    |         | 
+|    |         | 
+|    |         | 
+|    |         | 
+|    |         | 
+|    |         | 

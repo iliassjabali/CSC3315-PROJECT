@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-#include <math.h>
 #define TABLE_SIZE 17
 #define oprand_SIZE 3
 #define upcode_SIZE 2
@@ -12,9 +10,9 @@ typedef struct {
     char upcode[upcode_SIZE];
 } symboliclabels;
 
-symboliclabels SymTable[TABLE_SIZE]; 
-FILE* InFile = fopen("assemblycode.txt", "r");
-FILE* OutFIle = fopen("output.txt", "w");
+symboliclabels* SymTable[TABLE_SIZE]; 
+//FILE* InFile = fopen("assemblycode.txt", "r");
+//FILE* OutFIle = fopen("output.txt", "w");
 
 int hash(char *s){
     //a better one with less colisions
@@ -27,8 +25,8 @@ int hash(char *s){
 
 symboliclabels* search_table( char* key ){
     int index = hash(key);
-    if ( !strcmp(SymTable[index].oprand, key)) {
-        return &SymTable[index];
+    if ( !strcmp(SymTable[index]->oprand, key)) {
+        return SymTable[index];
     }
     else{ 
         printf("can't find the symbol\n");
@@ -37,11 +35,9 @@ symboliclabels* search_table( char* key ){
 }
 
 symboliclabels* gennerate_label(char* Oprand, char* Upcode){
-    symboliclabels* tmp;
-    tmp->oprand = (char*)malloc(sizeof(oprand_SIZE));
-    tmp->upcode = (char*)malloc(sizeof(upcode_SIZE));
-    memcpy(tmp->oprand,Oprand, sizeof(char)*oprand_SIZE);
-    memcpy(tmp->upcode,Upcode, sizeof(char)*upcode_SIZE);
+    symboliclabels* tmp = (symboliclabels*)malloc(sizeof(symboliclabels));
+    strcpy(tmp->oprand,Oprand);
+    strcpy(tmp->upcode,Upcode);
     return tmp;
 }//makes a node with allocated space 
 
@@ -50,9 +46,9 @@ int insert_table(symboliclabels* node){
     //printf("\nInserting into hash table\n");
     //if is the slot empty
     int index = hash(node->oprand);
-    if (!strcmp(SymTable[index].oprand, node->oprand)){
-        SymTable[index]= *node;
-
+    printf("\nInserting into hash table at index %d, the node: %s\n", index, node->oprand);
+    if (SymTable[index] != NULL){
+        SymTable[index] = node;
         return 1;
     }
     return 0;
@@ -60,27 +56,8 @@ int insert_table(symboliclabels* node){
 
 void display_table(void){
     for (int i=0; i<TABLE_SIZE; i++) {
-            printf("oprand: \t%s\tupcode: \t%s\n",SymTable[i].oprand,SymTable[i].upcode);
-        }
+        // if( SymTable[i] != NULL)
+            printf("Index:\t %d\toprand: \t%s\tupcode: \t%s\n",i,SymTable[i]->oprand,SymTable[i]->upcode);
+    }
     //printf("No Hash Entry at index %d\n",i);//just for empty entries
-}
-void initialise_table(void){
-    insert_table(gennerate_label("ASG", "+0"));
-    insert_table(gennerate_label("ADD", "+1"));
-    insert_table(gennerate_label("SUB", "-1"));
-    insert_table(gennerate_label("MUL", "+2"));
-    insert_table(gennerate_label("DIV", "-2"));
-    insert_table(gennerate_label("SQR", "+3"));
-    insert_table(gennerate_label("SQT", "-3"));
-    insert_table(gennerate_label("EQL", "+4"));
-    insert_table(gennerate_label("NEQ", "+5"));
-    insert_table(gennerate_label("NEQ", "+0"));
-    insert_table(gennerate_label("GTE", "+0"));
-    insert_table(gennerate_label("LSS", "+0"));
-    insert_table(gennerate_label("RDA", "+0"));
-    insert_table(gennerate_label("WTA", "+0"));
-    insert_table(gennerate_label("ITJ", "+0"));
-    insert_table(gennerate_label("STP", "+0"));
-    insert_table(gennerate_label("INP", "+8"));
-    insert_table(gennerate_label("OUT", "-8"));
 }
