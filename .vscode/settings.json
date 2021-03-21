@@ -1,8 +1,0 @@
-{
-    "python.pythonPath": "/usr/local/Caskroom/miniconda/base/bin/python",
-    "files.associations": {
-        "symboltable.h": "c",
-        "hash.h": "c",
-        "__locale": "c"
-    }
-}
